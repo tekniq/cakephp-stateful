@@ -18,9 +18,12 @@ class StatefulComponent extends Object {
 		} else {
 			if ($this->controller->data['Filter'] != (array)$this->Session->read("Filter.$key")) { 
 				$this->Session->write("Filter.$key", $this->controller->data['Filter']);
-				$this->controller->passedArgs['page'] = 1;
+				
+				if (empty($this->controller->passedArgs['page'])) {
+					$this->controller->passedArgs['page'] = 1;
+				}
 			}
-		} 
+		}
 		
 		# Extract pagination variables from url parameters
 		$pagination = array_intersect_key($this->controller->passedArgs, array_flip(array('page', 'sort', 'direction', 'limit')));
